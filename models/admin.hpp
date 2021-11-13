@@ -22,14 +22,36 @@ public:
         studentsArray = {};
         teachersArray = {};
         fstream inputDB;
-        inputDB.open("students.txt", ios::in);
+        try{
+            inputDB.open("students.txt", ios::in);
+        }
+        catch(string error){
+            inputDB.open("students.txt", ios::out | ios::in);
+        }
         while(!inputDB.eof()){
             string rawStudent;
             getline(inputDB, rawStudent);
-            // if(inputDB.eof())
-            //     break;
+            if(inputDB.eof())
+                break;
             studentsArray.push_back(StudentClass(rawStudent));
         }
+        inputDB.close();
+        
+        try{
+            inputDB.open("teachers.txt", ios::in | ios::out);
+        }
+        
+        catch(string error){
+            inputDB.open("teachers.txt", ios::out | ios::in);
+        }
+
+        while(!inputDB.eof()){
+            string rawTeacher;
+            getline(inputDB, rawTeacher);if(inputDB.eof())
+                break;
+            teachersArray.push_back(TeacherClass(rawTeacher));
+        }
+        inputDB.close();
     }
 
     ~Admin(){
@@ -39,6 +61,10 @@ public:
             outputDB << x.name << ";" << x.age << ";" << x.batch << ";" << x.rollNo << endl;
         }
         outputDB.close();
+        outputDB.open("teachers.txt", ios::out);
+        for(auto x:teachersArray){
+            outputDB << x.name << ";" << x.age << ";" << x.subject << ";" << x.designation << ";" << x.id << endl;
+        }
     }
 
     void addStudent()
