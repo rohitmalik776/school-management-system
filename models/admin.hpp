@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "student.hpp"
 #include "teacher.hpp"
@@ -20,6 +21,24 @@ public:
         password = "Password";
         studentsArray = {};
         teachersArray = {};
+        fstream inputDB;
+        inputDB.open("students.txt", ios::in);
+        while(!inputDB.eof()){
+            string rawStudent;
+            getline(inputDB, rawStudent);
+            // if(inputDB.eof())
+            //     break;
+            studentsArray.push_back(StudentClass(rawStudent));
+        }
+    }
+
+    ~Admin(){
+        fstream outputDB;
+        outputDB.open("students.txt", ios::out);
+        for(auto x:studentsArray){
+            outputDB << x.name << ";" << x.age << ";" << x.batch << ";" << x.rollNo << endl;
+        }
+        outputDB.close();
     }
 
     void addStudent()

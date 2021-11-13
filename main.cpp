@@ -19,7 +19,8 @@ enum MenuOption
     Read,
     Update,
     Delete,
-    GoBack
+    GoBack,
+    Exit
 };
 
 using namespace std;
@@ -134,6 +135,14 @@ MenuOption selectSubMenuOption(bool isStudent)
         {
             return MenuOption::Delete;
         }
+        case '6':
+        {
+            return MenuOption::GoBack;
+        }
+        case '7':
+        {
+            return MenuOption::Exit;
+        }
         default:
         {
             system("cls");
@@ -228,14 +237,16 @@ int main()
             goto TEACHERMENU;
             break;
         }
+        case MenuOption::Exit:
+        {
+            return 0;
+        }
         default:
             break;
         }
     }
     else if (mainMenuOption == PersonType::SaveAndExit)
     {
-        // StudentClass::save();
-        // TeacherClass::Save();
         return 0;
     }
     else

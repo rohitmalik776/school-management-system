@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cstring>
 #include "person.hpp"
 
 using namespace std;
@@ -20,6 +21,23 @@ public:
         this->age = age;
         this->batch = batch;
         this->rollNo = rollNo;
+    }
+    
+    StudentClass(string rawData){
+        char str[100];
+        strcpy(str, rawData.c_str());
+        
+        char* tok = strtok(str, ";");
+        this->name = string(tok);
+
+        tok = strtok(NULL, ";");
+        this->rollNo = string(tok);
+        
+        tok = strtok(NULL, ";");
+        this->batch = string(tok);
+        
+        tok = strtok(NULL, ";");
+        this->age = string(tok);
     }
 
     // Print single student
