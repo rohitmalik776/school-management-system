@@ -1,98 +1,199 @@
 #include <iostream>
-#include <vector>
-#include <fstream>
-#include <string>
+#include <assert.h>
 
-#include"models/student.hpp"
-#include"functions/add_student.hpp"
-#include"functions/search.hpp"
-#include"functions/modify.hpp"
-#include"functions/lock.hpp"
-#include"functions/delete.hpp"
-#include"functions/view.hpp"
-#include"functions/fetch_store.hpp"
+#include "models/student.hpp"
+#include "models/admin.hpp"
+
+#define _padding_ "\t\t"
+
+enum PersonType
+{
+    Student,
+    Teacher,
+    SaveAndExit
+};
+enum MenuOption
+{
+    Create,
+    Search,
+    Read,
+    Update,
+    Delete,
+    GoBack
+};
 
 using namespace std;
 
-/// declaring students as a global array of objects
-vector<student> students;
+inline void drawHorizontalSeperator()
+{
+    cout << _padding_;
+    for (int i = 0; i < 20; i++)
+        cout << '*';
+    cout << endl;
+}
+
+void drawMainMenu()
+{
+    string arr[] = {"Select an option",
+                    "1.) Student",
+                    "2.) Teacher",
+                    "3.) Save & Exit"};
+    for (auto x : arr)
+    {
+        cout << _padding_ << x << endl;
+    }
+}
+
+PersonType selectMainMenuOption()
+{
+    char temp;
+    while (true)
+    {
+        drawHorizontalSeperator();
+        drawMainMenu();
+        cout << _padding_;
+        cin >> temp;
+        switch (temp)
+        {
+        case '1':
+        {
+            return PersonType::Student;
+        }
+        case '2':
+        {
+            return PersonType::Teacher;
+        }
+        case '3':
+        {
+            return PersonType::SaveAndExit;
+        }
+        default:
+        {
+            system("cls");
+            cout << _padding_ << "Try again" << endl;
+            break;
+        }
+        }
+    }
+}
+
+void drawSubMenu()
+{
+    string arr[] = {"Select an option", "1.) Create data for new student",
+                    "2.) Search for a student",
+                    "3.) Display all students",
+                    "4.) Update data for an existing student",
+                    "5.) Delete a record",
+                    "6.) Go back"};
+    for (auto x : arr)
+    {
+        cout << _padding_ << x << endl;
+    }
+}
+
+MenuOption selectSubMenuOption()
+{
+    char temp;
+    while (true)
+    {
+        drawHorizontalSeperator();
+        drawSubMenu();
+        cout << _padding_;
+        cin >> temp;
+        switch (temp)
+        {
+        case '1':
+        {
+            return MenuOption::Create;
+        }
+        case '2':
+        {
+            return MenuOption::Search;
+        }
+        case '3':
+        {
+            return MenuOption::Read;
+        }
+        case '4':
+        {
+            return MenuOption::Update;
+        }
+        case '5':
+        {
+            return MenuOption::Delete;
+        }
+        default:
+        {
+            system("cls");
+            cout << _padding_ << "Try again" << endl;
+            break;
+        }
+        }
+    }
+}
+
+
 int main()
 {
-    system ( "color 30" );
-    system("cls");
+    Admin admin;
 
-    // Invoking "lock()" function to ask the user for username and password
-    lock();
-
-    ImportStudents(students);
-
-    char selector;
-    char search_selector;
-    string key;
-
-    /// Label for returning to menu after performing an operation
-lab:
-
-    cout << "Select an option...\n";
-    cout << "1. Add a student\n";
-    cout << "2. Search for a student by roll no\n";
-    cout << "3. Modify a student\n";
-    cout << "4. Delete a student\n";
-    cout << "5. View all students\n";
-    cout << "6. Save and Exit\n";
-
-    cin >> selector;
-    cin.ignore();
-
-    switch (selector)
+    PersonType mainMenuOption = selectMainMenuOption();
+    if (mainMenuOption == PersonType::Student)
     {
-
-    case '1':
-
-        addstudent(students);
-        break;
-
-    case '2':
-
-        cout << "Enter the roll no of the student\n";
-
-        // cin.ignore();
-        getline(cin, key);
-
-        rollsearch(key, students);
-        break;
-
-    case '3':
-
-        cout << "Select a student to modify\n";
-        studentmodify(students);
-
-        break;
-
-    case '4':
-
-        cout << "Select a student to delete\n";
-        studentdelete(students);
-
-        break;
-
-    case '5':
-
-        viewstudents(students);
-        break;
-
-    case '6':
-
-        eksport(students);
-        return 0;
-
-    default:
-        cout << "No matching option found\n";
-        cout << "Please retry\n";
+    // Student menu
+    STUDENTMENU:
+        MenuOption menuOption = selectSubMenuOption();
+        switch (menuOption)
+        {
+        case MenuOption::Create:
+        {
+            cin.ignore();
+            admin.addStudent();
+            goto STUDENTMENU;
+            break;
+        }
+        case MenuOption::Search:
+        {
+            admin.searchStudent();
+            goto STUDENTMENU;
+            break;
+        }
+        case MenuOption::Read:
+        {
+            admin.viewAllStudents();
+            goto STUDENTMENU;
+            break;
+        }
+        case MenuOption::Update:
+        {
+            admin.updateAStudent();
+            goto STUDENTMENU;
+            break;
+        }
+        case MenuOption::Delete:
+        {
+            admin.removeAStudent();
+            goto STUDENTMENU;
+            break;
+        }
+        default:
+            break;
+        }
     }
-
-    /// Jump to the start of menu
-    goto lab;
-
+    else if (mainMenuOption == PersonType::Teacher)
+    {
+        // Do something
+    }
+    else if (mainMenuOption == PersonType::SaveAndExit)
+    {
+        StudentClass::save();
+        // TeacherClass::Save();
+        return 0;
+    }
+    else
+    {
+        assert(0 && "No option matched in while selecting person type");
+    }
+    drawHorizontalSeperator();
     return 0;
 }
