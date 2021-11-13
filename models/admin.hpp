@@ -1,8 +1,11 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
 
 #include "student.hpp"
+#include "teacher.hpp"
 
 using namespace std;
 
@@ -11,12 +14,13 @@ class Admin
 public:
     string password;
     vector<StudentClass> studentsArray;
+    vector<TeacherClass> teachersArray;
     Admin()
     {
         password = "Password";
         studentsArray = {};
+        teachersArray = {};
     }
-
 
     void addStudent()
     {
@@ -88,7 +92,6 @@ public:
         int modselector, opselector, modifyagain = 0;
         for (int i = 0; i < studentsArray.size(); i++)
         {
-
             cout << i + 1 << ". " << studentsArray[i].name << endl;
         }
 
@@ -157,7 +160,6 @@ public:
 
     void removeAStudent()
     {
-
         int delselector;
         bool del, confirm;
 
@@ -179,5 +181,174 @@ public:
         cin >> del;
         if (del)
             studentsArray.erase(studentsArray.begin() + delselector - 1);
+    }
+
+    void addATeacher()
+    {
+        TeacherClass tempTeacher;
+        cout << "Enter the name of the Teacher: ";
+        getline(cin, tempTeacher.name);
+
+        cout << "Enter the age of the Teacher: ";
+        getline(cin, tempTeacher.age);
+
+        cout << "Enter the subject of the Teacher: ";
+        getline(cin, tempTeacher.subject);
+
+        cout << "Enter the designation of the Teacher: ";
+        getline(cin, tempTeacher.designation);
+
+        cout << "Enter the id of the teacher: ";
+        getline(cin, tempTeacher.id);
+
+        teachersArray.push_back(tempTeacher);
+        cout << "Teacher Added!" << endl;
+
+        system("pause");
+        system("cls");
+    }
+
+    void searchATeacher()
+    {
+        string key;
+        cout << "Enter the id of the teacher to search: ";
+        cin.ignore();
+        getline(cin, key);
+        for (auto x : teachersArray)
+        {
+            if (x.id == key)
+            {
+                x.view();
+                system("pause");
+                system("cls");
+                return;
+            }
+        }
+        cout << "No such teacher found!" << endl;
+        system("pause");
+        system("cls");
+        return;
+    }
+
+    void viewAllTeachers()
+    {
+        for (auto x : teachersArray)
+        {
+            x.view();
+        }
+    }
+
+    void updateATeacher(){
+
+        if (teachersArray.size() == 0)
+        {
+            cout << "No students exist to modify\n";
+            return;
+        }
+        int modselector, opselector, modifyagain = 0;
+        for (int i = 0; i < teachersArray.size(); i++)
+        {
+            cout << i + 1 << ". " << teachersArray[i].name << endl;
+        }
+
+        cin >> modselector;
+
+    labelmodifyteacher:
+        cout << "Details for " << teachersArray[modselector - 1].name << " are:\n";
+        teachersArray[modselector - 1].view();
+
+        cout << "Choose a property to modify\n";
+        cin >> opselector;
+
+        switch (opselector)
+        {
+
+        case 1:
+
+            cout << "Enter new name for teacher " << teachersArray[modselector - 1].name << endl;
+            cin.ignore();
+            getline(cin, teachersArray[modselector - 1].name);
+
+            cout << "Would you like to modify something else too?\n";
+            cout << "0. No\n1. Yes\n";
+            cin >> modifyagain;
+            if (modifyagain)
+                goto labelmodifyteacher;
+
+            break;
+
+        case 2:
+
+            cout << "Enter new age for teacher " << teachersArray[modselector - 1].name << endl;
+            cin.ignore();
+            getline(cin, teachersArray[modselector - 1].age);
+            cout << "Would you like to modify something else too?\n";
+            cout << "0. No\n1. Yes\n";
+            cin >> modifyagain;
+            if (modifyagain)
+                goto labelmodifyteacher;
+
+            break;
+
+        case 3:
+
+            cout << "Enter new subject for teacher " << teachersArray[modselector - 1].name << endl;
+            cin.ignore();
+            getline(cin, teachersArray[modselector - 1].subject);
+            cout << "Would you like to modify something else too?\n";
+            cout << "0. No\n1. Yes\n";
+            cin >> modifyagain;
+            if (modifyagain)
+                goto labelmodifyteacher;
+
+            break;
+        
+        case 4:
+
+            cout << "Enter new designation for student " << teachersArray[modselector - 1].name << endl;
+            cin.ignore();
+            getline(cin, teachersArray[modselector - 1].designation);
+            cout << "Would you like to modify something else too?\n";
+            cout << "0. No\n1. Yes\n";
+            cin >> modifyagain;
+            if (modifyagain)
+                goto labelmodifyteacher;
+
+            break;
+
+        default:
+
+            cout << "No matching option found!\n";
+        }
+
+        system("pause");
+        system("cls");
+    }
+
+    void removeATeacher(){
+        int delselector;
+        bool del, confirm;
+
+        // Printing the names of all the available teachers
+        for (auto x : teachersArray)
+        {
+            x.view();
+        }
+
+        cin >> delselector;
+
+        cout << "Details for " << teachersArray[delselector - 1].name << " are:\n";
+        cout << "1. Name: " << teachersArray[delselector - 1].name << endl;
+        cout << "2. Age: " << teachersArray[delselector - 1].age << endl;
+        cout << "3. Subject: " << teachersArray[delselector - 1].subject << endl;
+        cout << "4. Designation: " << teachersArray[delselector - 1].designation << endl;
+        cout << "5. ID: " << teachersArray[delselector - 1].id << endl;
+
+        cout << "Do you want to delete " << teachersArray[delselector - 1].name << "?\n";
+        cout << "0. No\n1. Yes\n";
+        cin >> del;
+        if (del)
+            teachersArray.erase(teachersArray.begin() + delselector - 1);
+    
     }
 };

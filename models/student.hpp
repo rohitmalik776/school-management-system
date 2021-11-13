@@ -14,7 +14,6 @@ private:
 
 public:
     string batch, rollNo;
-    static vector<StudentClass> students;    
     StudentClass(string name, string age, string batch, string rollNo)
     {
         this->name = name;
@@ -29,30 +28,31 @@ public:
         cout << this->name << " " << this->rollNo << " " << this->batch << " " << this->age << endl;
     }
 
-    static void save()
-    {
-        fstream db;
-        db.open("student_data.txt", ios::in);
+    // static void save()
+    // {
+    //     fstream db;
+    //     db.open("student_data.txt", ios::in);
 
-        for (int i = 0; i < students.size(); i++)
-        {
-            db << students[i].name;
-            db << endl;
-            db << students[i].rollNo;
-            db << endl;
-            db << students[i].batch;
-            db << endl;
-        }
-        db.close();
+    //     for (int i = 0; i < students.size(); i++)
+    //     {
+    //         db << students[i].name;
+    //         db << endl;
+    //         db << students[i].rollNo;
+    //         db << endl;
+    //         db << students[i].batch;
+    //         db << endl;
+    //     }
+    //     db.close();
 
-        system("pause");
-        system("cls");
-    }
+    //     system("pause");
+    //     system("cls");
+    // }
 
     StudentClass() {}
 };
 
-vector<StudentClass> StudentClass::students = vector<StudentClass>();
+
+
 
 /*NOTES
 base -> person

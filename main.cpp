@@ -77,27 +77,39 @@ PersonType selectMainMenuOption()
     }
 }
 
-void drawSubMenu()
+void drawSubMenu(bool isStudent)
 {
-    string arr[] = {"Select an option", "1.) Create data for new student",
-                    "2.) Search for a student",
-                    "3.) Display all students",
-                    "4.) Update data for an existing student",
-                    "5.) Delete a record",
-                    "6.) Go back"};
-    for (auto x : arr)
-    {
-        cout << _padding_ << x << endl;
-    }
+    string studentArr[] = {"Select an option", "1.) Create data for new student",
+                           "2.) Search for a student",
+                           "3.) Display all students",
+                           "4.) Update data for an existing student",
+                           "5.) Delete a record",
+                           "6.) Go back"};
+    string teacherArr[] = {"Select an option", "1.) Create data for new teacher",
+                           "2.) Search for a teacher",
+                           "3.) Display all teachers",
+                           "4.) Update data for an existing teacher",
+                           "5.) Delete a record",
+                           "6.) Go back"};
+    if (isStudent)
+        for (auto x : studentArr)
+        {
+            cout << _padding_ << x << endl;
+        }
+    else
+        for (auto x : teacherArr)
+        {
+            cout << _padding_ << x << endl;
+        }
 }
 
-MenuOption selectSubMenuOption()
+MenuOption selectSubMenuOption(bool isStudent)
 {
     char temp;
     while (true)
     {
         drawHorizontalSeperator();
-        drawSubMenu();
+        drawSubMenu(isStudent);
         cout << _padding_;
         cin >> temp;
         switch (temp)
@@ -132,7 +144,6 @@ MenuOption selectSubMenuOption()
     }
 }
 
-
 int main()
 {
     Admin admin;
@@ -142,7 +153,7 @@ int main()
     {
     // Student menu
     STUDENTMENU:
-        MenuOption menuOption = selectSubMenuOption();
+        MenuOption menuOption = selectSubMenuOption(true);
         switch (menuOption)
         {
         case MenuOption::Create:
@@ -182,11 +193,48 @@ int main()
     }
     else if (mainMenuOption == PersonType::Teacher)
     {
-        // Do something
+    TEACHERMENU:
+        MenuOption menuOption = selectSubMenuOption(false);
+        switch (menuOption)
+        {
+        case MenuOption::Create:
+        {
+            cin.ignore();
+            admin.addATeacher();
+            goto TEACHERMENU;
+            break;
+        }
+        case MenuOption::Search:
+        {
+            admin.searchATeacher();
+            goto TEACHERMENU;
+            break;
+        }
+        case MenuOption::Read:
+        {
+            admin.viewAllTeachers();
+            goto TEACHERMENU;
+            break;
+        }
+        case MenuOption::Update:
+        {
+            admin.updateATeacher();
+            goto TEACHERMENU;
+            break;
+        }
+        case MenuOption::Delete:
+        {
+            admin.removeATeacher();
+            goto TEACHERMENU;
+            break;
+        }
+        default:
+            break;
+        }
     }
     else if (mainMenuOption == PersonType::SaveAndExit)
     {
-        StudentClass::save();
+        // StudentClass::save();
         // TeacherClass::Save();
         return 0;
     }
