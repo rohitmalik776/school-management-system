@@ -22,47 +22,58 @@ public:
         studentsArray = {};
         teachersArray = {};
         fstream inputDB;
-        try{
-            inputDB.open("students.txt", ios::in);
+        try
+        {
+            inputDB.open("students.txt", ios::in | ios::out);
         }
-        catch(string error){
+        catch (string error)
+        {
             inputDB.open("students.txt", ios::out | ios::in);
         }
-        while(!inputDB.eof()){
-            string rawStudent;
-            getline(inputDB, rawStudent);
-            if(inputDB.eof())
-                break;
-            studentsArray.push_back(StudentClass(rawStudent));
-        }
+        if (inputDB.is_open())
+            while (!inputDB.eof())
+            {
+                string rawStudent;
+                getline(inputDB, rawStudent);
+                if (inputDB.eof())
+                    break;
+                studentsArray.push_back(StudentClass(rawStudent));
+            }
         inputDB.close();
-        
-        try{
+
+        try
+        {
             inputDB.open("teachers.txt", ios::in | ios::out);
         }
-        
-        catch(string error){
+        catch (string error)
+        {
             inputDB.open("teachers.txt", ios::out | ios::in);
         }
 
-        while(!inputDB.eof()){
-            string rawTeacher;
-            getline(inputDB, rawTeacher);if(inputDB.eof())
-                break;
-            teachersArray.push_back(TeacherClass(rawTeacher));
-        }
+        if (inputDB.is_open())
+            while (!inputDB.eof())
+            {
+                string rawTeacher;
+                getline(inputDB, rawTeacher);
+                if (inputDB.eof())
+                    break;
+                teachersArray.push_back(TeacherClass(rawTeacher));
+            }
         inputDB.close();
     }
 
-    ~Admin(){
+    ~Admin()
+    {
         fstream outputDB;
         outputDB.open("students.txt", ios::out);
-        for(auto x:studentsArray){
+        for (auto x : studentsArray)
+        {
             outputDB << x.name << ";" << x.age << ";" << x.batch << ";" << x.rollNo << endl;
         }
         outputDB.close();
         outputDB.open("teachers.txt", ios::out);
-        for(auto x:teachersArray){
+        for (auto x : teachersArray)
+        {
             outputDB << x.name << ";" << x.age << ";" << x.subject << ";" << x.designation << ";" << x.id << endl;
         }
     }
@@ -283,7 +294,8 @@ public:
         }
     }
 
-    void updateATeacher(){
+    void updateATeacher()
+    {
 
         if (teachersArray.size() == 0)
         {
@@ -347,7 +359,7 @@ public:
                 goto labelmodifyteacher;
 
             break;
-        
+
         case 4:
 
             cout << "Enter new designation for student " << teachersArray[modselector - 1].name << endl;
@@ -370,7 +382,8 @@ public:
         system("cls");
     }
 
-    void removeATeacher(){
+    void removeATeacher()
+    {
         int delselector;
         bool del, confirm;
 
@@ -394,6 +407,5 @@ public:
         cin >> del;
         if (del)
             teachersArray.erase(teachersArray.begin() + delselector - 1);
-    
     }
 };
