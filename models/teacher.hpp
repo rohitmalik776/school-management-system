@@ -5,11 +5,14 @@
 #include <fstream>
 #include "person.hpp"
 
-class TeacherClass : public Person
+class TeacherClass : private Person
 {
 private:
-public:
+    friend class Admin;
     string subject, designation, id;
+
+
+public:
     TeacherClass(string name, string age, string subject, string designation, string id)
     {
         this->name = name;
@@ -19,11 +22,8 @@ public:
         this->id = id;
     }
 
-    TeacherClass() {}
-
     TeacherClass(string rawData)
     {
-        cout << "Inside teacher constructor" << endl;
         char str[100];
         strcpy(str, rawData.c_str());
 
@@ -38,7 +38,10 @@ public:
         tok = strtok(NULL, ";");
         this->id = string(tok);
     }
+    
+    TeacherClass() {}
 
+    private:
     void view()
     {
         cout << name << " " << age << " " << subject << " " << designation << " " << id << endl;

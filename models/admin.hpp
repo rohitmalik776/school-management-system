@@ -8,6 +8,8 @@
 #include "student.hpp"
 #include "teacher.hpp"
 
+#define _padding_ "\t\t"
+
 using namespace std;
 
 class Admin
@@ -83,21 +85,25 @@ public:
         // Making a temporary Student type object
         StudentClass temp;
         // Taking input of it's properties
-        cout << "Enter name of the Student...\n";
+        cout << _padding_ << "Enter name of the Student...\n";
+        cout << _padding_;
         getline(cin, temp.name);
 
-        cout << "Enter the age of the Student...\n";
+        cout << _padding_ << "Enter the age of the Student...\n";
+        cout << _padding_;
         getline(cin, temp.age);
 
-        cout << "Enter the roll no for " << temp.name << endl;
+        cout << _padding_ << "Enter the roll no for " << temp.name << endl;
+        cout << _padding_;
         getline(cin, temp.rollNo);
 
-        cout << "Enter the batch for " << temp.name << endl;
+        cout << _padding_ << "Enter the batch for " << temp.name << endl;
+        cout << _padding_;
         getline(cin, temp.batch);
 
         // Finally, adding it to the array
         studentsArray.push_back(temp);
-        cout << "Student added!\n";
+        cout << _padding_ << "Student added!\n";
 
         system("pause");
         system("cls");
@@ -106,6 +112,8 @@ public:
     void searchStudent()
     {
         string key;
+        
+        cout << _padding_;
         cout << "Enter roll no. of a student to search: ";
         cin.ignore();
         getline(cin, key);
@@ -130,6 +138,7 @@ public:
 
     void viewAllStudents()
     {
+        cout << _padding_;
         for (auto x : studentsArray)
         {
             x.view();

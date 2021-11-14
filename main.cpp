@@ -85,13 +85,15 @@ void drawSubMenu(bool isStudent)
                            "3.) Display all students",
                            "4.) Update data for an existing student",
                            "5.) Delete a record",
-                           "6.) Go back"};
+                           "6.) Go back",
+                           "7.) Exit the application"};
     string teacherArr[] = {"Select an option", "1.) Create data for new teacher",
                            "2.) Search for a teacher",
                            "3.) Display all teachers",
                            "4.) Update data for an existing teacher",
                            "5.) Delete a record",
-                           "6.) Go back"};
+                           "6.) Go back",
+                           "7.) Exit the application"};
     if (isStudent)
         for (auto x : studentArr)
         {
@@ -157,6 +159,7 @@ int main()
 {
     Admin admin;
 
+MAINMENU:
     PersonType mainMenuOption = selectMainMenuOption();
     if (mainMenuOption == PersonType::Student)
     {
@@ -195,6 +198,16 @@ int main()
             admin.removeAStudent();
             goto STUDENTMENU;
             break;
+        }
+        case MenuOption::GoBack:
+        {
+            goto MAINMENU;
+            break;
+        }
+        case MenuOption::Exit:
+        {
+            cout << "Thank you for using our app!" << endl;
+            return 0;
         }
         default:
             break;
@@ -237,8 +250,14 @@ int main()
             goto TEACHERMENU;
             break;
         }
+        case MenuOption::GoBack:
+        {
+            goto MAINMENU;
+            break;
+        }
         case MenuOption::Exit:
         {
+            cout << "Thank you for using our app!" << endl;
             return 0;
         }
         default:
@@ -247,6 +266,7 @@ int main()
     }
     else if (mainMenuOption == PersonType::SaveAndExit)
     {
+        cout << "Thank you for using our app!" << endl;
         return 0;
     }
     else
@@ -254,5 +274,6 @@ int main()
         assert(0 && "No option matched in while selecting person type");
     }
     drawHorizontalSeperator();
+    cout << "Thank you for using our app!" << endl;
     return 0;
 }
