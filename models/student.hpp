@@ -50,22 +50,3 @@ public:
         cout << this->name << " " << this->rollNo << " " << this->batch << " " << this->age << endl;
     }
 };
-
-
-
-
-/*NOTES
-base -> person                                                                yes
-extend -> Student and teacher                                                 yes
-member functions                                                              yes
-function overriding                                                           yes
-abstract class                                                                yes
-virtual and purely virtual functions                                          yes
-
-abstraction         using abstract classes                                    done
-encapsulation       getters and setters                                       done
-inheritance         base and derived classes                                  done
-polymorphism        overloading and virtual functions                         done
-dynamic binding     using base class and purely virtual functions             done
-file handling                                                                 done
-*/
