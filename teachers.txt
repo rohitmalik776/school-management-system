@@ -1,1 +1,2 @@
-Kamal Arora;28;Physics;PhD Undergrad;2k20/gf/1
+Garima Chhikara;30;Programming Fundamentals;M. Tech CSE;2K20/10
+Vinay Kumar;27;Analog Electronics;Professor;2K20/GF/EC/10

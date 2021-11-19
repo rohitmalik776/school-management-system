@@ -1,8 +1,8 @@
 #include <iostream>
 #include <assert.h>
 
-#include "models/student.hpp"
-#include "models/admin.hpp"
+#include "headers/student.hpp"
+#include "headers/admin.hpp"
 
 #define _padding_ "\t\t"
 
